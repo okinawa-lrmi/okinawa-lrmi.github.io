@@ -37,9 +37,14 @@ NAV = [
 ]
 
 # 新着情報（新しいものを上に書く）
+# （日付, 表示用の日付, ページのファイル名, 見出し, 本文HTML）
 NEWS = [
-    ('2016-02-24', '2016.02.24', '20150320.html', '「医療情報利用推進セミナー」を開催します。', 'お知らせ'),
-    ('2015-03-19', '2015.03.19', '20150319.html', 'ウェブサイトを公開しました。', 'お知らせ'),
+    ('2026-11-15', '2026.11.15', '20261115.html', 'Webサイトをリニューアルしました。',
+     '<p>おきなわ長寿復興・医療イノベーション研究所のWebサイトをリニューアルしました。</p>'),
+    ('2016-02-24', '2016.02.24', '20150320.html', '「医療情報利用推進セミナー」を開催します。',
+     '<p>詳しくは<a href="content/files/20160224-075621.pdf">こちら</a>（PDF）</p>'),
+    ('2015-03-19', '2015.03.19', '20150319.html', 'ウェブサイトを公開しました。',
+     '<p>おきなわ長寿復興・医療イノベーション研究所のウェブサイトを公開しました。</p>'),
 ]
 
 LINKS = [
@@ -49,18 +54,8 @@ LINKS = [
      '学童と高齢者への食に対する情報提供と食事介入で地域の健康行動を向上させ、生活習慣病改善で沖縄県民の健康と長寿を促進することを目標としております。'),
 ]
 
-ICON = {
-    'building': '<path d="M12 54V20h24v34M36 54V30h16v24M6 54h52"/><path d="M19 28h4M27 28h4M19 36h4M27 36h4M19 44h4M27 44h4M42 38h4M42 46h4"/><path d="M24 20v-8M20 12h8"/>',
-    'doc': '<path d="M16 8h24l10 10v38H16z"/><path d="M40 8v10h10M23 28h20M23 36h20M23 44h12"/>',
-    'link': '<path d="M27 37a10 10 0 0 0 14 0l9-9a10 10 0 0 0-14-14l-4 4"/><path d="M37 27a10 10 0 0 0-14 0l-9 9a10 10 0 0 0 14 14l4-4"/>',
-    'mail': '<path d="M8 16h48v32H8z"/><path d="M8 18l24 18 24-18"/>',
-    'tel': '<path d="M20 8h24a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z"/><path d="M28 48h8M16 16h32M16 42h32"/>',
-}
-
-
-def icon(name):
-    return ('<svg viewBox="0 0 64 64" fill="none" stroke="#7b2d12" stroke-width="2.5" '
-            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%s</svg>' % ICON[name])
+FONTS = ('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500'
+         '&amp;family=Shippori+Mincho:wght@500;700&amp;display=swap')
 
 
 def head(title, desc, path):
@@ -73,17 +68,17 @@ def head(title, desc, path):
 <title>%s</title>
 <meta name="description" content="%s">
 <link rel="canonical" href="%s%s">
-<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="assets/img/emblem.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&amp;display=swap">
+<link rel="stylesheet" href="%s">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-''' % (full, desc, BASE, '' if path == 'index.html' else path)
+''' % (full, desc, BASE, '' if path == 'index.html' else path, FONTS)
 
 
-def brand(tag='a'):
-    return ('<a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="46" height="46">'
+def brand():
+    return ('<a class="brand" href="index.html"><img src="assets/img/emblem.svg" alt="" width="50" height="50">'
             '<span><small>一般社団法人</small><strong>%s</strong></span></a>' % ORG_WBR)
 
 
@@ -95,8 +90,8 @@ def header(current):
 <div class="wrap hd-main">
 %s
 <div class="hd-aside">
-<a class="btn btn-line btn-small" href="contact.html">お問合せ</a>
-<button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false"><i></i>Menu</button>
+<a class="more" href="contact.html">お問合せ</a>
+<button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false">Menu</button>
 </div>
 </div>
 <nav class="hd-nav" aria-label="メインメニュー">
@@ -112,16 +107,16 @@ def header(current):
 def footer():
     items = ''.join('<li><a href="%s">%s</a></li>\n' % (h, t) for h, t in NAV)
     return '''<footer class="ft">
-<div class="wrap ft-main">
+<div class="wrap">
 <div>
 %s
 <address>%s %s<br>
-TEL：<a href="%s">%s</a> ／ <a href="%s">%s</a></address>
+TEL：<a href="%s">%s</a>　MAIL：<a href="%s">%s</a></address>
 </div>
 <ul class="ft-nav">
 %s</ul>
 </div>
-<div class="colophon"><p>Copyright &copy; %s. All rights reserved.</p></div>
+<p class="copy">Copyright &copy; %s. All rights reserved.</p>
 </footer>
 <script src="assets/js/site.js"></script>
 </body>
@@ -136,14 +131,13 @@ def page(path, title, en, desc, body, crumbs=None):
     c += '<li>%s</li>' % title
     cur = crumbs[0][0] if crumbs else path
     html = head(title, desc, path) + header(cur) + '''<main>
-<div class="page-hd">
-<div class="wrap">
-<p class="en">%s</p>
-<h1>%s</h1>
-</div>
-</div>
 <div class="wrap">
 <ul class="crumbs">%s</ul>
+<div class="page-hd">
+<p class="en">%s</p>
+<h1>%s</h1>
+<img src="assets/img/flourish.svg" alt="" width="240" height="24">
+</div>
 </div>
 <div class="wrap page">
 <div class="prose">
@@ -151,7 +145,7 @@ def page(path, title, en, desc, body, crumbs=None):
 </div>
 </div>
 </main>
-''' % (en, title, c, body) + footer()
+''' % (c, en, title, body) + footer()
     write(path, html)
 
 
@@ -162,70 +156,73 @@ def write(path, html):
 
 
 def news_items(items):
-    return ''.join('<li><time datetime="%s">%s</time><a href="%s">%s</a><span class="tag">%s</span></li>\n' % n
-                   for n in items)
+    return ''.join('<li><time datetime="%s">%s</time><a href="%s">%s</a></li>\n' % n[:4] for n in items)
 
 
 # ---------- トップページ ----------
 def build_index():
-    links = ''.join('<li><a class="card" href="%s"><b>%s</b></a></li>\n' % (u, t) for u, t, d in LINKS)
-    feats = [
-        ('facilities.html', 'building', '研究所案内', '代表挨拶、事業内容、研究所の概要をご案内します。'),
-        ('plan.html', 'doc', '受託案件', 'これまでに受託した事業・研究開発の一覧です。'),
-        ('link.html', 'link', 'リンク', '関連するプロジェクトのサイトをご紹介します。'),
-        ('contact.html', 'mail', 'お問合せ', 'お電話またはメールにてお気軽にお問い合わせ下さい。'),
+    sites = ''.join('<li><a href="%s">%s</a></li>\n' % (u, t) for u, t, d in LINKS)
+    guide = [
+        ('facilities.html', '研究所案内', '代表挨拶、事業内容、研究所の概要'),
+        ('plan.html', '受託案件', 'これまでに受託した事業・研究開発'),
+        ('link.html', 'リンク', '関連するプロジェクトのサイト'),
+        ('contact.html', 'お問合せ', 'お電話またはメールにて'),
     ]
-    fhtml = ''.join('<li><a class="feature" href="%s">%s<h3>%s</h3><p>%s</p></a></li>\n' % (h, icon(i), t, d)
-                    for h, i, t, d in feats)
+    ghtml = ''.join('<li><a href="%s"><b>%s</b><span>%s</span><i aria-hidden="true">→</i></a></li>\n' % g
+                    for g in guide)
     html = head('', DESC, 'index.html') + header('index.html') + '''<main>
 <section class="hero">
-<img class="hero-art" src="assets/img/hero.svg" alt="" width="1600" height="720">
-<div class="hero-body">
 <div class="wrap">
+<div>
 <p class="hero-sub">Okinawa LRMI</p>
-<p class="hero-main"><span>沖縄県における</span><span>次世代の地域医療に関する</span><span>事業、調査、政策提言を行っています。</span></p>
-<a class="btn" href="facilities.html">研究所案内</a>
+<p class="hero-main"><span>沖縄県における</span><span>次世代の地域医療に関する</span><span>事業、調査、政策提言を</span><span>行っています。</span></p>
+<img class="hero-rule" src="assets/img/flourish.svg" alt="" width="240" height="24">
+<a class="more" href="facilities.html">研究所案内</a>
 </div>
+<img class="hero-art" src="assets/img/hibiscus.svg" alt="" width="420" height="580">
 </div>
 </section>
 
-<div class="wrap sec home-cols">
+<div class="wrap">
+<div class="sec home-cols">
 <section>
 <header class="sec-hd">
 <h2><span class="en">News</span><span class="ja">新着情報</span></h2>
-<a class="btn btn-line btn-small" href="news.html">すべて表示</a>
+<a class="more" href="news.html">すべて表示</a>
 </header>
 <ul class="news">
 %s</ul>
 </section>
 <aside>
-<div class="aside-hd">
-<h2>Links</h2>
-<a class="btn btn-line btn-small" href="link.html">すべて表示</a>
-</div>
-<ul class="cards">
+<header class="sec-hd">
+<h2><span class="en">Links</span><span class="ja">リンク</span></h2>
+</header>
+<ul class="sites">
 %s</ul>
 </aside>
 </div>
+</div>
 
 <section class="about sec">
-<div class="wrap about-cols">
+<div class="wrap">
 <div>
 <h2><small>一般社団法人</small>%s</h2>
 <p>本研究所は、医療分野でのイノベーションとなる新技術の開発支援を通して、沖縄県の地域産業振興に貢献するという目的のもとに設立されました。</p>
-<a class="btn" href="facilities.html">研究所案内</a>
+<a class="more" href="facilities.html">研究所案内</a>
 </div>
-<img src="assets/img/about.svg" alt="" width="480" height="360" loading="lazy">
+<img src="assets/img/fish.svg" alt="" width="480" height="340" loading="lazy">
 </div>
 </section>
 
 <section class="wrap sec">
-<h2 class="sr-only">ご案内</h2>
-<ul class="features">
+<header class="sec-hd">
+<h2><span class="en">Contents</span><span class="ja">ご案内</span></h2>
+</header>
+<ul class="index">
 %s</ul>
 </section>
 </main>
-''' % (news_items(NEWS), links, ORG_WBR, fhtml) + footer()
+''' % (news_items(NEWS[:5]), sites, ORG_WBR, ghtml) + footer()
     write('index.html', html)
 
 
@@ -249,7 +246,7 @@ def build_facilities():
 <p>ご助言、ご協力を頂けますようよろしくお願い申し上げます。</p>
 
 <h2>事業内容</h2>
-<ul>
+<ul class="list">
 <li>地域医療情報に関する調査事業</li>
 <li>離島医療における調査事業</li>
 <li>医療機器開発に関する調査支援事業</li>
@@ -302,26 +299,22 @@ def build_plan():
         s = ('\n<ul>\n' + ''.join('<li>%s</li>\n' % x for x in sub) + '</ul>\n') if sub else ''
         li += '<li>%s%s</li>\n' % (t, s)
     page('plan.html', '受託案件', 'Projects',
-         ORG + 'がこれまでに受託した事業・研究開発の一覧です。', '<ul>\n%s</ul>' % li)
+         ORG + 'がこれまでに受託した事業・研究開発の一覧です。', '<ul class="list">\n%s</ul>' % li)
 
 
 # ---------- 新着情報 ----------
 def build_news():
     page('news.html', '新着情報', 'News',
          ORG + 'の新着情報を一覧でご覧いただけます。', '<ul class="news">\n%s</ul>' % news_items(NEWS))
-    back = '\n<p class="back"><a class="btn btn-line" href="news.html">新着情報一覧</a></p>'
-    page('20150319.html', 'ウェブサイトを公開しました。', 'News', 'ウェブサイトを公開しました。',
-         '<p class="post-date">2015.03.19</p>\n<p>おきなわ長寿復興・医療イノベーション研究所のウェブサイトを公開しました。</p>' + back,
-         [('news.html', '新着情報')])
-    page('20150320.html', '「医療情報利用推進セミナー」を開催します。', 'News', '「医療情報利用推進セミナー」を開催します。',
-         '<p class="post-date">2016.02.24</p>\n<p>詳しくは<a href="content/files/20160224-075621.pdf">こちら</a>（PDF）</p>' + back,
-         [('news.html', '新着情報')])
+    back = '\n<p class="back"><a class="more" href="news.html">新着情報一覧</a></p>'
+    for iso, shown, path, title, body in NEWS:
+        page(path, title, 'News', title, '<p class="post-date">%s</p>\n%s' % (shown, body) + back,
+             [('news.html', '新着情報')])
 
 
 # ---------- リンク ----------
 def build_link():
-    li = ''.join('<li><a class="card" href="%s"><b>%s</b><span>%s</span><em>%s</em></a></li>\n' % (u, t, d, u)
-                 for u, t, d in LINKS)
+    li = ''.join('<li><a href="%s">%s</a><p>%s</p><small>%s</small></li>\n' % (u, t, d, u) for u, t, d in LINKS)
     page('link.html', 'リンク', 'Links', ORG + 'のおすすめサイトをご紹介します。',
          '<ul class="linklist">\n%s</ul>' % li)
 
@@ -329,10 +322,10 @@ def build_link():
 # ---------- お問合せ ----------
 def build_contact():
     body = '''<p>ご質問、お問合せは、お電話またはメールにてお気軽にお問い合わせ下さい。</p>
-<div class="contact-box">
-<div>%s<h2>お電話</h2><a href="%s">%s</a></div>
-<div>%s<h2>メール</h2><a href="%s">%s</a></div>
-</div>''' % (icon('tel'), TEL_HREF, TEL, icon('mail'), MAILTO, MAIL_E)
+<dl class="contact">
+<div><dt>お電話</dt><dd><a href="%s">%s</a></dd></div>
+<div><dt>メール</dt><dd><a href="%s">%s</a></dd></div>
+</dl>''' % (TEL_HREF, TEL, MAILTO, MAIL_E)
     page('contact.html', 'お問合せ', 'Contact',
          'お電話かメールで、' + ORG + 'へのお問合せいただけます。', body)
 
