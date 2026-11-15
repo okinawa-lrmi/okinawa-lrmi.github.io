@@ -191,6 +191,7 @@ def build_facilities():
     members = people([('設立時社員', '崎間敦'), ('設立時社員', '東上里康司'), ('設立時社員', '又吉哲太郎'),
                       ('設立時社員', '横田勝彦'), ('社員', '岩淵成志'), ('社員', '梅村武寛'), ('社員', '奥村耕一郎'),
                       ('社員', '白井こころ'), ('社員', '等々力英美')])
+    staff = people([('総務', '末吉未央'), ('システム・コーディネーター', '樽川智亜希')]).replace('class="people"', 'class="people people-wide"')
     body = '''<h2>代表挨拶</h2>
 <p>一般社団法人おきなわ長寿復興・医療イノベーション研究所の理事を代表して、一言ご挨拶と本研究所開設の趣旨についてお話しいたします。</p>
 <p>本研究所は、医療分野でのイノベーションとなる新技術の開発支援を通して、沖縄県の地域産業振興に貢献するという目的のもとに設立されました。</p>
@@ -224,7 +225,10 @@ def build_facilities():
 <div><dt>社員</dt><dd>
 %s
 </dd></div>
-</dl>''' % (ORG_FULL, ZIP, ADDR, officers, members)
+<div><dt>事務局</dt><dd>
+%s
+</dd></div>
+</dl>''' % (ORG_FULL, ZIP, ADDR, officers, members, staff)
     page('facilities.html', '研究所案内', 'About',
          ORG + 'の事業内容など、研究所のご案内をしています。', body)
 

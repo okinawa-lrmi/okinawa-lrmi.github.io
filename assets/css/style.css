@@ -84,6 +84,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline
 .outline dd { margin: 0; }
 .outline .people { margin: 0; }
 .people li { display: grid; grid-template-columns: 7.5em 1fr; }
+.people-wide li { grid-template-columns: 13.5em 1fr; }
 .people span { font-size: 16px; color: var(--mute); }
 .contact { margin: 28px 0 0; border-top: 1px solid var(--ink); }
 .contact > div { display: grid; grid-template-columns: 9em minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule); }
