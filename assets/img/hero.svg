@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" fill="none" stroke="#7b2d12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<rect width="1600" height="720" fill="#fbf6e9" stroke="none"/>
+
+<!-- 太陽 -->
+<circle cx="1290" cy="165" r="74" fill="#f6e2b3" stroke="none"/>
+<circle cx="1290" cy="165" r="102" stroke-opacity=".45" stroke-dasharray="1 16"/>
+
+<!-- 雲 -->
+<g fill="#fff" stroke-opacity=".7">
+<path d="M770 178c-20 0-28-24-10-32 0-24 32-34 46-14 16-14 44-4 44 18 18 2 20 28 0 28z"/>
+<path d="M1010 104c-16 0-22-18-8-26 0-18 26-26 38-10 12-10 34-2 34 14 14 2 16 22 0 22z"/>
+<path d="M1450 258c-14 0-20-16-8-22 0-16 22-22 32-10 12-8 30-2 30 12 12 2 14 20 0 20z"/>
+</g>
+
+<!-- 鳥 -->
+<g stroke-width="2.5" stroke-opacity=".8">
+<path d="M900 250q12-14 22 0q10-14 22 0"/>
+<path d="M968 214q9-10 16 0q8-10 16 0"/>
+<path d="M1130 292q8-9 15 0q7-9 15 0"/>
+</g>
+
+<!-- 海 -->
+<path d="M0 400H1600V620H0z" fill="#f4ecd6" stroke="none"/>
+<path d="M0 400H1600" stroke-opacity=".6"/>
+
+<!-- 遠くの島 -->
+<path d="M930 400c30-44 92-64 150-34 34-30 96-22 132 34z" fill="#ecdfc0"/>
+<path d="M1010 372q10-10 20 0M1120 380q10-10 20 0" stroke-width="2" stroke-opacity=".5"/>
+<path d="M1420 400c20-26 60-34 92-14 22-12 52-6 70 14z" fill="#ecdfc0"/>
+
+<!-- 波 -->
+<g stroke-width="2.5" stroke-opacity=".45">
+<path d="M640 436q12-9 24 0t24 0t24 0"/>
+<path d="M980 446q12-9 24 0t24 0t24 0"/>
+<path d="M1260 432q12-9 24 0t24 0"/>
+<path d="M560 486q12-9 24 0t24 0t24 0t24 0"/>
+<path d="M1100 498q12-9 24 0t24 0t24 0"/>
+<path d="M1400 470q12-9 24 0t24 0t24 0"/>
+<path d="M300 452q12-9 24 0t24 0"/>
+<path d="M120 500q12-9 24 0t24 0t24 0"/>
+</g>
+
+<!-- 離島へ向かう小舟 -->
+<g transform="translate(452 -34) scale(.9)" transform-origin="840 440">
+<path d="M792 468q46 22 96 0l-10-6h-76z" fill="#fff"/>
+<path d="M838 462v-62"/>
+<path d="M838 402l34 52h-34z" fill="#f6e2b3"/>
+<path d="M838 410l-24 44h24z" fill="#fff"/>
+</g>
+
+<!-- 手前の陸 -->
+<path d="M0 606C260 566 520 552 800 570s520 36 800-6V720H0z" fill="#f9f1dc" stroke="none"/>
+<path d="M0 606C260 566 520 552 800 570s520 36 800-6"/>
+
+<!-- ガジュマルの木 -->
+<g>
+<path d="M972 580c4-26 2-48-8-66M996 582c-4-28 0-48 12-64M984 580v-40"/>
+<path d="M914 506c-26-8-28-46 0-54 0-32 42-46 62-22 24-24 68-8 64 26 30 6 32 46 2 54-10 22-46 22-58 6-18 16-54 12-70-10z" fill="#eee6c8"/>
+<path d="M950 470q10-10 20 0M1000 486q10-10 20 0M960 500q8-8 16 0" stroke-width="2" stroke-opacity=".5"/>
+</g>
+
+<!-- 赤瓦の家 -->
+<g>
+<path d="M1068 520h132v62h-132z" fill="#fff"/>
+<path d="M1046 522l38-46h100l38 46z" fill="#eec3a8"/>
+<path d="M1100 480l-14 40M1122 478l-6 42M1146 478l6 42M1168 480l14 40" stroke-width="2" stroke-opacity=".55"/>
+<path d="M1120 582v-36h28v36M1166 540h20v18h-20z"/>
+</g>
+
+<!-- 診療所 -->
+<g>
+<path d="M1300 478h150v112h-150z" fill="#fff"/>
+<path d="M1290 478h170"/>
+<path d="M1356 446h38v32h-38z" fill="#fbf6e9"/>
+<path d="M1375 453v18M1366 462h18" stroke-width="3.5"/>
+<path d="M1320 504h26v24h-26zM1404 504h26v24h-26zM1360 590v-44h30v44M1375 546v44" />
+</g>
+
+<!-- 人びと -->
+<g fill="#fff">
+<!-- お年寄り -->
+<circle cx="1222" cy="560" r="13"/>
+<path d="M1202 628c0-36 8-52 20-52s20 16 20 52z"/>
+<path d="M1248 598l6 30" />
+<!-- 医療者 -->
+<circle cx="1272" cy="550" r="13"/>
+<path d="M1250 630c0-44 9-62 22-62s22 18 22 62z"/>
+<path d="M1272 588v12M1266 594h12" stroke-width="2.5"/>
+<!-- 子ども -->
+<circle cx="1182" cy="584" r="10"/>
+<path d="M1167 632c0-26 6-36 15-36s15 10 15 36z"/>
+</g>
+<path d="M1242 600q8 6 14-2" stroke-width="2.5"/>
+
+<!-- 草 -->
+<g stroke-width="2.5" stroke-opacity=".6">
+<path d="M1040 600q4-14 0-22M1050 600q6-10 10-18M1030 600q-4-10-10-16"/>
+<path d="M1480 606q4-14 0-22M1490 606q6-10 10-18"/>
+<path d="M700 590q4-14 0-22M710 590q6-10 10-18M690 590q-4-10-10-16"/>
+<path d="M330 600q4-14 0-22M340 600q6-10 10-18"/>
+</g>
+
+<!-- ハイビスカス -->
+<g transform="translate(1510 660)">
+<path d="M-70 40c-40-30-90-20-110 10 40 20 80 14 110-10z" fill="#eee6c8"/>
+<path d="M-70 40q-56 0-108 10" stroke-width="2" stroke-opacity=".5"/>
+<g fill="#f3cdb9">
+<path d="M0 0C-24-22-26-62 0-76 26-62 24-22 0 0z"/>
+<path d="M0 0C-24-22-26-62 0-76 26-62 24-22 0 0z" transform="rotate(72)"/>
+<path d="M0 0C-24-22-26-62 0-76 26-62 24-22 0 0z" transform="rotate(144)"/>
+<path d="M0 0C-24-22-26-62 0-76 26-62 24-22 0 0z" transform="rotate(216)"/>
+<path d="M0 0C-24-22-26-62 0-76 26-62 24-22 0 0z" transform="rotate(288)"/>
+</g>
+<path d="M0 0l-34-52" />
+<g fill="#f6e2b3" stroke-width="2"><circle cx="-34" cy="-52" r="4"/><circle cx="-26" cy="-58" r="3.5"/><circle cx="-42" cy="-48" r="3.5"/></g>
+</g>
+</svg>
