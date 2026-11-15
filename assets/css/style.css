@@ -194,3 +194,9 @@ ul { padding-left: 1.2em; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* 本文内のリンク一覧・お知らせ一覧には箇条書きの印を付けない */
+.prose ul.linklist > li, .prose ul.news > li { padding-left: 0; }
+.prose ul.linklist > li::before, .prose ul.news > li::before { content: none; }
+.prose ul.linklist > li { padding-block: 0; border: 0; }
+.prose ul.news > li { padding-block: 18px; border-bottom: 1px solid var(--border); }
