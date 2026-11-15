@@ -27,6 +27,9 @@ MAIL_E = enc(MAIL)
 MAILTO = enc('mailto:' + MAIL)
 TEL_HREF = 'tel:' + TEL.replace('-', '')
 
+# リンク欄・リンクページを出すかどうか（今は中身がないので隠している。True にすると復活する）
+SHOW_LINKS = False
+
 NAV = [
     ('index.html', 'トップページ'),
     ('facilities.html', '研究所案内'),
@@ -35,6 +38,9 @@ NAV = [
     ('link.html', 'リンク'),
     ('contact.html', 'お問合せ'),
 ]
+
+if not SHOW_LINKS:
+    NAV = [n for n in NAV if n[0] != 'link.html']
 
 # 新着情報（新しいものを上に書く）
 # （日付, 表示用の日付, ページのファイル名, 見出し, 本文HTML）
@@ -60,7 +66,7 @@ FONTS = ('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@
 
 def head(title, desc, path):
     full = ORG_FULL if not title else title + '｜' + ORG_FULL
-    return '''<!DOCTYPE html>
+    return """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -68,60 +74,43 @@ def head(title, desc, path):
 <title>%s</title>
 <meta name="description" content="%s">
 <link rel="canonical" href="%s%s">
-<link rel="icon" type="image/svg+xml" href="assets/img/emblem.svg">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="%s">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-''' % (full, desc, BASE, '' if path == 'index.html' else path, FONTS)
+""" % (full, desc, BASE, '' if path == 'index.html' else path, FONTS)
 
 
-def brand():
-    return ('<a class="brand" href="index.html"><img src="assets/img/emblem.svg" alt="" width="50" height="50">'
-            '<span><small>一般社団法人</small><strong>%s</strong></span></a>' % ORG_WBR)
-
-
-def header(current):
+def header(current, home=False):
     items = ''.join('<li><a href="%s"%s>%s</a></li>\n' % (h, ' aria-current="page"' if h == current else '', t)
                     for h, t in NAV)
-    return '''<body>
+    return """<body%s>
 <header class="hd">
-<div class="wrap hd-main">
-%s
-<div class="hd-aside">
-<a class="more" href="contact.html">お問合せ</a>
-<button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false">Menu</button>
-</div>
-</div>
-<nav class="hd-nav" aria-label="メインメニュー">
 <div class="wrap">
+<a class="brand" href="index.html"><small>一般社団法人</small><strong>%s</strong></a>
+<button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false">Menu</button>
+<nav aria-label="メインメニュー">
 <ul class="nav" id="nav">
 %s</ul>
-</div>
 </nav>
+</div>
 </header>
-''' % (brand(), items)
+""" % (' class="home"' if home else '', ORG_WBR, items)
 
 
 def footer():
-    items = ''.join('<li><a href="%s">%s</a></li>\n' % (h, t) for h, t in NAV)
-    return '''<footer class="ft">
+    return """<footer class="ft">
 <div class="wrap">
-<div>
-%s
-<address>%s %s<br>
-TEL：<a href="%s">%s</a>　MAIL：<a href="%s">%s</a></address>
-</div>
-<ul class="ft-nav">
-%s</ul>
-</div>
+<address><b>%s</b><span>%s %s</span><span>TEL：<a href="%s">%s</a></span><span>MAIL：<a href="%s">%s</a></span></address>
 <p class="copy">Copyright &copy; %s. All rights reserved.</p>
+</div>
 </footer>
 <script src="assets/js/site.js"></script>
 </body>
 </html>
-''' % (brand(), ZIP, ADDR, TEL_HREF, TEL, MAILTO, MAIL_E, items, ORG_FULL)
+""" % (ORG_FULL, ZIP, ADDR, TEL_HREF, TEL, MAILTO, MAIL_E, ORG_FULL)
 
 
 def page(path, title, en, desc, body, crumbs=None):
@@ -136,7 +125,6 @@ def page(path, title, en, desc, body, crumbs=None):
 <div class="page-hd">
 <p class="en">%s</p>
 <h1>%s</h1>
-<img src="assets/img/flourish.svg" alt="" width="240" height="24">
 </div>
 </div>
 <div class="wrap page">
@@ -161,68 +149,34 @@ def news_items(items):
 
 # ---------- トップページ ----------
 def build_index():
-    sites = ''.join('<li><a href="%s">%s</a></li>\n' % (u, t) for u, t, d in LINKS)
-    guide = [
-        ('facilities.html', '研究所案内', '代表挨拶、事業内容、研究所の概要'),
-        ('plan.html', '受託案件', 'これまでに受託した事業・研究開発'),
-        ('link.html', 'リンク', '関連するプロジェクトのサイト'),
-        ('contact.html', 'お問合せ', 'お電話またはメールにて'),
-    ]
-    ghtml = ''.join('<li><a href="%s"><b>%s</b><span>%s</span><i aria-hidden="true">→</i></a></li>\n' % g
-                    for g in guide)
-    html = head('', DESC, 'index.html') + header('index.html') + '''<main>
+    html = head('', DESC, 'index.html') + header('index.html', home=True) + """<main>
 <section class="hero">
 <div class="wrap">
-<div>
+<picture>
+<source srcset="assets/img/keyvisual.webp" type="image/webp">
+<img class="hero-art" src="assets/img/keyvisual.jpg" alt="ガジュマルの大樹とハイビスカス、遠くに島の見える海を描いた線画" width="1510" height="850">
+</picture>
+<div class="hero-text">
 <p class="hero-sub">Okinawa LRMI</p>
-<p class="hero-main"><span>沖縄県における</span><span>次世代の地域医療に関する</span><span>事業、調査、政策提言を</span><span>行っています。</span></p>
-<img class="hero-rule" src="assets/img/flourish.svg" alt="" width="240" height="24">
+<h1 class="hero-main"><span>沖縄県における</span><span>次世代の地域医療に関する</span><span>事業、調査、政策提言を</span><span>行っています。</span></h1>
 <a class="more" href="facilities.html">研究所案内</a>
 </div>
-<img class="hero-art" src="assets/img/hibiscus.svg" alt="" width="420" height="580">
 </div>
 </section>
 
+<section class="newsbar">
 <div class="wrap">
-<div class="sec home-cols">
-<section>
-<header class="sec-hd">
+<div class="newsbar-hd">
 <h2><span class="en">News</span><span class="ja">新着情報</span></h2>
 <a class="more" href="news.html">すべて表示</a>
-</header>
+</div>
 <ul class="news">
 %s</ul>
-</section>
-<aside>
-<header class="sec-hd">
-<h2><span class="en">Links</span><span class="ja">リンク</span></h2>
-</header>
-<ul class="sites">
-%s</ul>
-</aside>
+<a class="more" href="news.html">すべて表示</a>
 </div>
-</div>
-
-<section class="about sec">
-<div class="wrap">
-<div>
-<h2><small>一般社団法人</small>%s</h2>
-<p>本研究所は、医療分野でのイノベーションとなる新技術の開発支援を通して、沖縄県の地域産業振興に貢献するという目的のもとに設立されました。</p>
-<a class="more" href="facilities.html">研究所案内</a>
-</div>
-<img src="assets/img/fish.svg" alt="" width="480" height="340" loading="lazy">
-</div>
-</section>
-
-<section class="wrap sec">
-<header class="sec-hd">
-<h2><span class="en">Contents</span><span class="ja">ご案内</span></h2>
-</header>
-<ul class="index">
-%s</ul>
 </section>
 </main>
-''' % (news_items(NEWS[:5]), sites, ORG_WBR, ghtml) + footer()
+""" % news_items(NEWS[:3]) + footer()
     write('index.html', html)
 
 
@@ -335,5 +289,6 @@ if __name__ == '__main__':
     build_facilities()
     build_plan()
     build_news()
-    build_link()
+    if SHOW_LINKS:
+        build_link()
     build_contact()
