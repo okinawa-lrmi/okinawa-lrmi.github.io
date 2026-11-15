@@ -103,14 +103,14 @@ def header(current, home=False):
 def footer():
     return """<footer class="ft">
 <div class="wrap">
-<address><b>%s</b><span>%s %s</span><span>TEL：<a href="%s">%s</a></span><span>MAIL：<a href="%s">%s</a></span></address>
+<address><b>%s</b><span>%s %s</span><span>TEL：%s</span><span>MAIL：<a href="%s">%s</a></span></address>
 <p class="copy">Copyright &copy; %s. All rights reserved.</p>
 </div>
 </footer>
 <script src="assets/js/site.js"></script>
 </body>
 </html>
-""" % (ORG_FULL, ZIP, ADDR, TEL_HREF, TEL, MAILTO, MAIL_E, ORG_FULL)
+""" % (ORG_FULL, ZIP, ADDR, TEL, MAILTO, MAIL_E, ORG_FULL)
 
 
 def page(path, title, en, desc, body, crumbs=None):
@@ -284,9 +284,10 @@ def build_link():
 def build_contact():
     body = '''<p>ご質問、お問合せは、お電話またはメールにてお気軽にお問い合わせ下さい。</p>
 <dl class="contact">
-<div><dt>お電話</dt><dd><a href="%s">%s</a></dd></div>
+<div><dt>住所</dt><dd class="addr">%s<br>%s</dd></div>
+<div><dt>お電話</dt><dd><span class="num">%s</span></dd></div>
 <div><dt>メール</dt><dd><a href="%s">%s</a></dd></div>
-</dl>''' % (TEL_HREF, TEL, MAILTO, MAIL_E)
+</dl>''' % (ZIP, ADDR, TEL, MAILTO, MAIL_E)
     page('contact.html', 'お問合せ', 'Contact',
          'お電話かメールで、' + ORG + 'へのお問合せいただけます。', body)
 

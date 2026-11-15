@@ -90,8 +90,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline
 .contact > div { display: grid; grid-template-columns: 9em minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule); }
 .contact dt { font-weight: 700; letter-spacing: .1em; }
 .contact dd { margin: 0; }
-.contact a { font-family: var(--latin); font-size: clamp(24px, 3.4vw, 32px); letter-spacing: .03em; color: var(--ink); word-break: break-all; font-variant-numeric: lining-nums; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+.contact a, .contact .num { font-family: var(--latin); font-size: clamp(24px, 3.4vw, 32px); letter-spacing: .03em; color: var(--ink); word-break: break-all; font-variant-numeric: lining-nums; text-decoration-thickness: 1px; text-underline-offset: .25em; }
 .contact a:hover { color: var(--green); }
+.contact .addr { font-size: 19px; line-height: 1.8; }
 .linklist li { padding: 22px 0; border-bottom: 1px solid var(--rule); }
 .linklist li:first-child { border-top: 1px solid var(--ink); }
 .linklist a { font-family: var(--mincho); font-size: 20px; font-weight: 500; letter-spacing: .04em; color: var(--ink); }
