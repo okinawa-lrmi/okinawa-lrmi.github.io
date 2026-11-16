@@ -64,23 +64,58 @@ FONTS = ('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@
          '&amp;family=Shippori+Mincho:wght@500;700&amp;display=swap')
 
 
+# Google Search Console の所有確認コード（発行されたら content の値をここに入れる）
+GOOGLE_VERIFY = ''
+VERIFY = ('<meta name="google-site-verification" content="%s">\n' % GOOGLE_VERIFY) if GOOGLE_VERIFY else ''
+
+# 検索エンジン向けの法人情報
+ORG_JSONLD = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"%s","alternateName":"%s","url":"%s","logo":"%sassets/img/favicon.png","image":"%sassets/img/keyvisual.jpg","description":"%s","foundingDate":"2014-07-01","telephone":"+81-80-6485-5626","address":{"@type":"PostalAddress","postalCode":"901-2214","addressRegion":"沖縄県","addressLocality":"宜野湾市","streetAddress":"我如古4-4-2 613","addressCountry":"JP"}}
+</script>
+""" % (ORG_FULL, ORG, BASE, BASE, BASE, DESC)
+
+PAGES = []   # サイトマップ用に、作ったページのアドレスを集める
+
+
+def build_sitemap():
+    import datetime
+    today = datetime.date.today().isoformat()
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u in PAGES:
+        xml += '<url><loc>%s</loc><lastmod>%s</lastmod></url>\n' % (u, today)
+    xml += '</urlset>\n'
+    write('sitemap.xml', xml)
+    write('robots.txt', 'User-agent: *\nAllow: /\n\nSitemap: %ssitemap.xml\n' % BASE)
+
+
 def head(title, desc, path):
     full = ORG_FULL if not title else title + '｜' + ORG_FULL
+    url = BASE + ('' if path == 'index.html' else path)
+    PAGES.append(url)
     return """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>%s</title>
-<meta name="description" content="%s">
-<link rel="canonical" href="%s%s">
-<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<title>%(full)s</title>
+<meta name="description" content="%(desc)s">
+<link rel="canonical" href="%(url)s">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="%(org)s">
+<meta property="og:title" content="%(full)s">
+<meta property="og:description" content="%(desc)s">
+<meta property="og:url" content="%(url)s">
+<meta property="og:image" content="%(base)sassets/img/keyvisual.jpg">
+<meta name="twitter:card" content="summary_large_image">
+%(extra)s<link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="%s">
+<link rel="stylesheet" href="%(fonts)s">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-""" % (full, desc, BASE, '' if path == 'index.html' else path, FONTS)
+""" % dict(full=full, desc=desc or DESC, url=url, org=ORG_FULL, base=BASE, fonts=FONTS,
+           extra=(VERIFY + ORG_JSONLD) if path == 'index.html' else '')
 
 
 def header(current, home=False):
@@ -154,7 +189,7 @@ def build_index():
 <div class="wrap">
 <picture>
 <source srcset="assets/img/keyvisual.webp" type="image/webp">
-<img class="hero-art" src="assets/img/keyvisual.jpg" alt="ガジュマルの大樹とハイビスカス、遠くに島の見える海を描いた線画" width="1510" height="850">
+<img class="hero-art" src="assets/img/keyvisual.jpg" alt="ガジュマルの大樹とハイビスカス、遠くに島の見える海を描いた線画" width="1512" height="927">
 </picture>
 <div class="hero-text">
 <p class="hero-sub">Okinawa LRMI</p>
@@ -303,3 +338,4 @@ if __name__ == '__main__':
     if SHOW_LINKS:
         build_link()
     build_contact()
+    build_sitemap()
